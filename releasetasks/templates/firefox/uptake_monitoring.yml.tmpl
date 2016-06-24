@@ -56,3 +56,4 @@
                     platform: linux64
                 build:
                     platform: all
+            {{ task_notifications("{{ product }} {{ branch }} uptake monitoring", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}

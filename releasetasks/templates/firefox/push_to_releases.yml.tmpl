@@ -45,6 +45,8 @@
 
         extra:
             {{ common_extras(taskname='{}_human_decision'.format(push_to_releases_basename), locales=["null"], platform="null") | indent(12)}}
+            {{ task_notifications("{{ product }} {{ branch }} push to releases human decision task", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+
 {% endif %}
 
 -
@@ -108,3 +110,4 @@
                     platform: linux64
                 build:
                     platform: all
+            {{ task_notifications("[beetmover] {{ product }} {{ branch }} push to releases", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}

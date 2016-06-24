@@ -44,6 +44,8 @@
         extra:
             {{ common_extras(taskname=buildername, locales=["null"], platform="null") | indent(12)}}
             l10n_changesets: "{{ format_l10n_changesets(l10n_changesets) }}"
+            {{ task_notifications("{{ branch }} L10N changesets", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+
 
 -
     taskId: "{{ stableSlugId(buildername_beet) }}"
@@ -104,3 +106,4 @@
                     platform: Linux64
                 build:
                     platform: all
+            {{ task_notifications("[beetmover] {{ product }} {{ branch }} move L10N changesets", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}

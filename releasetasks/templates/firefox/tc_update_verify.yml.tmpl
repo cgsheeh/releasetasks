@@ -61,5 +61,7 @@
                 build:
                     platform: none
             #}
+            {{ task_notifications("{{ platform }} {{ channel }} update verification {{ chunk }}/{{ uv_totalchunks }}", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+
 {% endfor %}
 {% endfor %}

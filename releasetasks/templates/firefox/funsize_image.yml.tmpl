@@ -57,6 +57,7 @@
                     platform: linux64
                 build:
                     platform: all
+            {{ task_notifications('funsize_update_generator_image', failed={'plugins': ['irc'], 'message': 'Funsize update failed'})|indent(12) }}
 -
     taskId: "{{ stableSlugId("funsize_balrog_image") }}"
     reruns: 5

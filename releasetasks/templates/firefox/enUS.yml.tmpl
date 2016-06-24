@@ -61,6 +61,8 @@
                     platform: {{ get_treeherder_platform(platform) }}
                 build:
                     platform: {{ get_treeherder_platform(platform) }}
+            {{ task_notifications(taskname=complete_beetmover_basename) }}
+
 {% endif %}  # push_to_candidates_enabled
 
 {% if updates_enabled %}  # funsize
