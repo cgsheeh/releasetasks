@@ -45,7 +45,7 @@
 
         extra:
             {{ common_extras(taskname='{}_human_decision'.format(push_to_releases_basename), locales=["null"], platform="null") | indent(12)}}
-            {{ task_notifications("{} {} push to releases human decision task".format(product, branch), completed=["releng"]) | indent(12) }}
+            {{ task_notifications("{} {} push to releases human decision task".format(product, branch), completed=["releng"], failed=["releng"], exception=["releng"]) | indent(12) }}
 
 {% endif %}
 
@@ -110,4 +110,4 @@
                     platform: linux64
                 build:
                     platform: all
-            {{ task_notifications("[beetmover] {} {} push to releases".format(product, branch), completed=["releng"]) | indent(12) }}
+            {{ task_notifications("[beetmover] {} {} push to releases".format(product, branch), completed=["releng"], failed=["releng"], exception=["releng"]) | indent(12) }}

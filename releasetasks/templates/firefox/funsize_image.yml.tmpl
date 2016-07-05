@@ -57,7 +57,7 @@
                     platform: linux64
                 build:
                     platform: all
-            {{ task_notifications("Generate funsize-update-generator docker image", completed=["releng"])|indent(12) }}
+            {{ task_notifications("Generate funsize-update-generator docker image", completed=["releng"], failed=["releng"], exception=["releng"])|indent(12) }}
 -
     taskId: "{{ stableSlugId("funsize_balrog_image") }}"
     reruns: 5
@@ -103,7 +103,7 @@
             source: https://github.com/mozilla/releasetasks
 
         extra:
-            {{ task_notifications("Generate funsize-balrog-submitter docker image", completed=["releng"])|indent(12) }}
+            {{ task_notifications("Generate funsize-balrog-submitter docker image", completed=["releng"], failed=["releng"], exception=["releng"])|indent(12) }}
             {{ common_extras(taskname="funsize_balrog_image", locales=["null"], platform="null") | indent(12)}}
             treeherderEnv:
                 - staging

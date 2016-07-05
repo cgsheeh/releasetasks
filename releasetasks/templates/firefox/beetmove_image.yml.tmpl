@@ -44,7 +44,7 @@
             source: https://github.com/mozilla/releasetasks
 
         extra:
-            {{ task_notifications("Generate beetmover docker image", completed=["releng"]) | indent(12) }}
+            {{ task_notifications("Generate beetmover docker image", completed=["releng"], failed=["releng"], exception=["releng"]) | indent(12) }}
             {{ common_extras(taskname="beetmove_image", locales=["null"], platform="null") | indent(12)}}
             treeherderEnv:
                 - staging
