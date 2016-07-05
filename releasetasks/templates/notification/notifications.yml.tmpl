@@ -1,0 +1,171 @@
+{#
+Notifications via Pulse-Notify service
+The macro call should look like
+    task_notifications(taskname,
+                        completed=["releng"],
+                        failed=["releng"],
+                        artifact=["releng"],
+                        exception=["releng"])
+As defined at the top of release_graph.yml.tmpl
+#}
+{% if (completed is not none) or (failed is not none) or (artifact is not none) or (exception is not none) %}
+notifications:
+    {% if completed is iterable %}
+    task-completed:
+        subject: {{ taskname }} completed
+        message: {{ taskname }} has completed successfully! Yay!
+        ids:
+            {% for id in completed %}
+            - {{ id }}
+            {% endfor %}
+    {% elif completed is mapping %}
+    task-completed:
+        {% if completed['subject'] is defined %}
+        subject: {{ completed['subject'] }}
+        {% else %}
+        subject: {{ taskname }} completed
+        {% endif %}
+        {% if completed['message'] is defined %}
+        message: {{ completed['message'] }}
+        {% else %}
+        message: ''
+        {% endif %}
+        {% if completed['plugins'] is defined %}
+        plugins:
+        {% for plugin in completed['plugins'] %}
+            - {{ plugin }}
+        {% endfor %}
+        {% endif %}
+        {% if completed['emails'] is defined %}
+        emails:
+            {% for email in completed['emails'] %}
+             - {{ email }}
+            {% endfor %}
+        {% endif %}
+        {% if completed['nicks'] is defined %}
+        nicks:
+            {% for nick in completed['nicks'] %}
+             - {{ nick }}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+    {% if failed is iterable %}
+    task-failed:
+        subject: {{ taskname }} failed
+        message: Uh-oh! {{ taskname }} failed.
+        ids:
+            {% for id in failed %}
+            - {{ id }}
+            {% endfor %}
+    {% elif failed is mapping %}
+    task-failed:
+        {% if failed['subject'] is defined %}
+        subject: {{ failed['subject'] }}
+        {% else %}
+        subject: {{ taskname }} failed
+        {% endif %}
+        {% if failed['message'] is defined %}
+        message: {{ failed['message'] }}
+        {% else %}
+        message: ''
+        {% endif %}
+        {% if failed['plugins'] is defined %}
+        plugins:
+        {% for plugin in failed['plugins'] %}
+            - {{ plugin }}
+        {% endfor %}
+        {% endif %}
+        {% if failed['emails'] is defined %}
+        emails:
+            {% for email in failed['emails'] %}
+             - {{ email }}
+            {% endfor %}
+        {% endif %}
+        {% if failed['nicks'] is defined %}
+        nicks:
+            {% for nick in failed['nicks'] %}
+             - {{ nick }}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+    {% if artifact is iterable %}
+    artifact-created:
+        subject: {{ taskname }} artifact created
+        message: {{ taskname }} has resulted in the creation of an artifact.
+        ids:
+            {% for id in artifact%}
+            - {{ id }}
+            {% endfor %}
+    {% elif artifact is mapping %}
+    artifact-created:
+        {% if artifact['subject'] is defined %}
+        subject: {{ artifact['subject'] }}
+        {% else %}
+        subject: {{ taskname }} artifact created
+        {% endif %}
+        {% if artifact['message'] is defined %}
+        message: {{ artifact['message'] }}
+        {% else %}
+        message: ''
+        {% endif %}
+        {% if artifact['plugins'] is defined %}
+        plugins:
+        {% for plugin in artifact['plugins'] %}
+            - {{ plugin }}
+        {% endfor %}
+        {% endif %}
+        {% if artifact['emails'] is defined %}
+        emails:
+            {% for email in artifact['emails'] %}
+             - {{ email }}
+            {% endfor %}
+        {% endif %}
+        {% if artifact['nicks'] is defined %}
+        nicks:
+            {% for nick in artifact['nicks'] %}
+             - {{ nick }}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+    {% if exception is iterable %}
+    task-exception:
+        subject: {{ taskname }} exception
+        message: Uh-oh! {{ taskname }} resulted in an exception.
+        ids:
+            {% for id in exception %}
+            - {{ id }}
+            {% endfor %}
+    {% elif exception is mapping %}
+    task-exception:
+        {% if exception['subject'] is defined %}
+        subject: {{ exception['subject'] }}
+        {% else %}
+        subject: {{ taskname }} exception
+        {% endif %}
+        {% if exception['message'] is defined %}
+        message: {{ exception['message'] }}
+        {% else %}
+        message: ''
+        {% endif %}
+        {% if exception['plugins'] is defined %}
+        plugins:
+        {% for plugin in exception['plugins'] %}
+            - {{ plugin }}
+        {% endfor %}
+        {% endif %}
+        {% if exception['emails'] is defined %}
+        emails:
+            {% for email in exception['emails'] %}
+             - {{ email }}
+            {% endfor %}
+        {% endif %}
+        {% if exception['nicks'] is defined %}
+        nicks:
+            {% for nick in exception['nicks'] %}
+             - {{ nick }}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+{% else %}
+notifications: no notifications
+{% endif %}
