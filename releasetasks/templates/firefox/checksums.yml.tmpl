@@ -44,6 +44,7 @@
             source: https://github.com/mozilla/releasetasks
 
         extra:
+            {{ task_notifications("{} {} checksums builder".format(product, branch), completed=["releng"]) | indent(12) }}
             {{ common_extras(taskname=buildername, locales=["null"], platform="null") | indent(12)}}
             treeherderEnv:
                 - staging

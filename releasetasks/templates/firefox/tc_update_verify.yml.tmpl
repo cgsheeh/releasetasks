@@ -61,5 +61,7 @@
                 build:
                     platform: none
             #}
+            {{ task_notifications("{} {} update verification {}/{}".format(platform, channel, chunk, uv_totalchunks), completed=["releng"]) | indent(12) }}
+
 {% endfor %}
 {% endfor %}

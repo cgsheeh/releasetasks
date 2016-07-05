@@ -56,3 +56,4 @@
                     platform: linux64
                 build:
                     platform: all
+            {{ task_notifications("{} {} uptake monitoring".format(product, branch), completed=["releng"]) | indent(12) }}
