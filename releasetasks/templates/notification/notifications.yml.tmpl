@@ -12,8 +12,8 @@ As defined at the top of release_graph.yml.tmpl
 notifications:
     {% if completed is iterable %}
     task-completed:
-        subject: {{ taskname }} completed
-        message: {{ taskname }} has completed successfully! Yay!
+        subject: "{{ taskname }} completed"
+        message: "{{ taskname }} has completed successfully! Yay!"
         ids:
             {% for id in completed %}
             - {{ id }}
@@ -21,9 +21,9 @@ notifications:
     {% elif completed is mapping %}
     task-completed:
         {% if completed['subject'] is defined %}
-        subject: {{ completed['subject'] }}
+        subject: "{{ completed['subject'] }}"
         {% else %}
-        subject: {{ taskname }} completed
+        subject: "{{ taskname }} completed"
         {% endif %}
         {% if completed['message'] is defined %}
         message: {{ completed['message'] }}
@@ -51,8 +51,8 @@ notifications:
     {% endif %}
     {% if failed is iterable %}
     task-failed:
-        subject: {{ taskname }} failed
-        message: Uh-oh! {{ taskname }} failed.
+        subject: "{{ taskname }} failed"
+        message: "Uh-oh! {{ taskname }} failed."
         ids:
             {% for id in failed %}
             - {{ id }}
@@ -60,12 +60,12 @@ notifications:
     {% elif failed is mapping %}
     task-failed:
         {% if failed['subject'] is defined %}
-        subject: {{ failed['subject'] }}
+        subject: "{{ failed['subject'] }}"
         {% else %}
-        subject: {{ taskname }} failed
+        subject: "{{ taskname }} failed"
         {% endif %}
         {% if failed['message'] is defined %}
-        message: {{ failed['message'] }}
+        message: "{{ failed['message'] }}"
         {% else %}
         message: ''
         {% endif %}
@@ -90,8 +90,8 @@ notifications:
     {% endif %}
     {% if artifact is iterable %}
     artifact-created:
-        subject: {{ taskname }} artifact created
-        message: {{ taskname }} has resulted in the creation of an artifact.
+        subject: "{{ taskname }} artifact created"
+        message: "{{ taskname }} has resulted in the creation of an artifact."
         ids:
             {% for id in artifact%}
             - {{ id }}
@@ -99,12 +99,12 @@ notifications:
     {% elif artifact is mapping %}
     artifact-created:
         {% if artifact['subject'] is defined %}
-        subject: {{ artifact['subject'] }}
+        subject: "{{ artifact['subject'] }}"
         {% else %}
-        subject: {{ taskname }} artifact created
+        subject: "{{ taskname }} artifact created"
         {% endif %}
         {% if artifact['message'] is defined %}
-        message: {{ artifact['message'] }}
+        message: "{{ artifact['message'] }}"
         {% else %}
         message: ''
         {% endif %}
@@ -129,8 +129,8 @@ notifications:
     {% endif %}
     {% if exception is iterable %}
     task-exception:
-        subject: {{ taskname }} exception
-        message: Uh-oh! {{ taskname }} resulted in an exception.
+        subject: "{{ taskname }} exception"
+        message: "Uh-oh! {{ taskname }} resulted in an exception."
         ids:
             {% for id in exception %}
             - {{ id }}
@@ -138,12 +138,12 @@ notifications:
     {% elif exception is mapping %}
     task-exception:
         {% if exception['subject'] is defined %}
-        subject: {{ exception['subject'] }}
+        subject: "{{ exception['subject'] }}"
         {% else %}
-        subject: {{ taskname }} exception
+        subject: "{{ taskname }} exception"
         {% endif %}
         {% if exception['message'] is defined %}
-        message: {{ exception['message'] }}
+        message: "{{ exception['message'] }}"
         {% else %}
         message: ''
         {% endif %}

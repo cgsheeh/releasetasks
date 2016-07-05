@@ -45,7 +45,7 @@ class TestTaskNotifications(unittest.TestCase):
             beetmover_candidates_bucket='mozilla-releng-beet-mover-dev',
             push_to_releases_enabled=True,
             push_to_releases_automatic=True,
-            uptake_monitoring_enabled=True,
+            uptake_monitoring_enabled=False,
             postrelease_version_bump_enabled=True,
             postrelease_bouncer_aliases_enabled=True,
             tuxedo_server_url="https://bouncer.real.allizom.org/api",
@@ -55,6 +55,7 @@ class TestTaskNotifications(unittest.TestCase):
             balrog_api_root="https://balrog.real/api",
             funsize_balrog_api_root="http://balrog/api",
             signing_pvt_key=PVT_KEY_FILE,
+            publish_to_balrog_channels=None,
         )
 
     def test_notifications_exist(self):
