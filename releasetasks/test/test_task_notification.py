@@ -63,25 +63,31 @@ class TestTaskNotifications(unittest.TestCase):
             name = task['task']['metadata']['name']
 
             #  Make sure the extra/notifications section is present
-            self.assertTrue('extra' in task['task'],
-                            'No extra section in task {name}'.format(name=name))
-
             self.assertTrue('notifications' in task['task']['extra'],
                             'No extra/notifications section in task {name}'.format(name=name))
 
+    def test_subject_exists(self):
+        for task in self.graph['tasks']:
+            name = task['task']['metadata']['name']
             if type(task['task']['extra']['notifications']) is dict:
-                #  Assert each section has subject and message
                 for exchange in task['task']['extra']['notifications'].values():
                     self.assertTrue('subject' in exchange,
                                     'No subject in {exchange} notification section for {name}'.format(exchange=exchange,
                                                                                                       name=name))
-                    self.assertTrue('message' in exchange,
-                                    'No message in {exchange} notification section for {name}'.format(exchange=exchange,
-                                                                                                      name=name))
-            elif type(task['task']['extra']['notifications']) is str:
-                #  Assert only acceptable message is 'no notifications'
-                self.assertEquals(task['task']['extra']['notifications'], 'no notifications',
-                                  'Task {name} has {wrong_string} instead of \'no notifications\''.
-                                  format(name=name, wrong_string=task['task']['extra']['notifications']))
 
-            self.assertTrue(type(task['task']['extra']['notifications']) in (dict, str,))
+    def test_message_exists(self):
+        for task in self.graph['tasks']:
+            name = task['task']['metadata']['name']
+            if type(task['task']['extra']['notifications']) is dict:
+                for exchange in task['task']['extra']['notifications'].values():
+                    self.assertTrue('message' in exchange,
+                                    'No subject in {exchange} notification section for {name}'.format(exchange=exchange,
+                                                                                                      name=name))
+
+    def test_no_notification_string(self):
+        for task in self.graph['tasks']:
+            name = task['task']['metadata']['name']
+            if type(task['task']['extra']['notifications']) is str:
+                self.assertEquals(task['task']['extra']['notifications'], 'no notifications',
+                                  'Notifications section for {task} is string, should be \'no notifications\' not {wrong_string}'
+                                  .format(wrong_string=task['task']['extra']['notifications'], task=name))
