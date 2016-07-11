@@ -25,6 +25,16 @@ class TestSourceBuilder(unittest.TestCase):
                 "linux": {"task_id": "xyz"},
                 "win32": {"task_id": "xyy"}
             }},
+            partial_updates={
+                "38.0": {
+                    "buildNumber": 1,
+                    "locales": ["de", "en-GB", "zh-TW"],
+                },
+                "37.0": {
+                    "buildNumber": 2,
+                    "locales": ["de", "en-GB", "zh-TW"],
+                },
+            },
             l10n_config={},
             repo_path="releases/foo",
             revision="fedcba654321",
@@ -42,6 +52,7 @@ class TestSourceBuilder(unittest.TestCase):
             verifyConfigs={},
             signing_pvt_key=PVT_KEY_FILE,
             build_tools_repo_path='build/tools',
+            publish_to_balrog_channels=None,
         )
         self.task_def = get_task_by_name(self.graph, "foo_source")
         self.task = self.task_def["task"]
@@ -178,6 +189,7 @@ class TestSourceBuilderPushToMirrors(unittest.TestCase):
             verifyConfigs={},
             signing_pvt_key=PVT_KEY_FILE,
             build_tools_repo_path='build/tools',
+            publish_to_balrog_channels=None,
         )
 
     def test_source_required_by_push_to_mirrors(self):

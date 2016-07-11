@@ -35,7 +35,7 @@
                 revision: "{{ revision }}"
                 tuxedo_server_url: "{{ tuxedo_server_url }}"
                 partial_versions: {% set pipe = joiner(", ") %}{% for p, e in sorted(partial_updates.items()) %}{{ pipe() }}{{ "{}build{}".format(p, e["buildNumber"]) }}{% endfor %}
-                platforms: {{ en_US_config["platforms"] | sort() | join(", ") }}
+                platforms: {{ uptake_monitoring_platforms| sort() | join(", ") }}
         metadata:
             name: "{{ product }} {{ branch }} uptake monitoring"
             description: "Release Promotion uptake monitoring"
@@ -56,4 +56,4 @@
                     platform: linux64
                 build:
                     platform: all
-            {{ task_notifications("{{ product }} {{ branch }} uptake monitoring", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+            {{ task_notifications("{} {} uptake monitoring".format(product, branch), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}

@@ -43,7 +43,7 @@
 
         extra:
             {{ common_extras(taskname=buildername, locales=["null"], platform="null") | indent(12)}}
-            {{ task_notifications("{{ product }} {{ branch }} {{ platform }} partner repacks", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+            {{ task_notifications("{} {} {} partner repacks".format(product, branch, platform), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}
 
 
 -
@@ -88,7 +88,8 @@
 
         extra:
             {{ common_extras(taskname=buildername_eme_free, locales=["null"], platform="null") | indent(12)}}
-            {{ task_notifications("{{ product }} {{ branch }} {{ platform }} EME-free repacks", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+            {{ task_notifications("{} {} {} EME-free repacks".format(product, branch, platform), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}
+
 
 
 {% endfor %}
@@ -134,10 +135,10 @@
                 DUMMY_ENV_FOR_ENCRYPT: "fake"
             encryptedEnv:
                 - {{ encrypt_env_var(stableSlugId(buildername_push), now_ms,
-                                   now_ms + 24 * 3600 * 1000, 'AWS_ACCESS_KEY_ID',
+                                   now_ms + 24 * 4 * 3600 * 1000, 'AWS_ACCESS_KEY_ID',
                                    beetmover_aws_access_key_id) }}
                 - {{ encrypt_env_var(stableSlugId(buildername_push), now_ms,
-                                   now_ms + 24 * 3600 * 1000, 'AWS_SECRET_ACCESS_KEY',
+                                   now_ms + 24 * 4 * 3600 * 1000, 'AWS_SECRET_ACCESS_KEY',
                                    beetmover_aws_secret_access_key) }}
         metadata:
             name: "[beetmover] {{ product }} {{ branch }} partner repacks push to releases"
@@ -158,6 +159,6 @@
                     platform: linux64
                 build:
                     platform: all
-            {{ task_notifications("[beetmover] {{ product }} {{ branch }} partner repacks push to releases", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+            {{ task_notifications("[beetmover] {} {} partner repacks push to releases".format(product, branch), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}
 
 {% endif %}

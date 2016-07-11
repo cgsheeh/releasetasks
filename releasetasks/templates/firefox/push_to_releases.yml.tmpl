@@ -45,7 +45,7 @@
 
         extra:
             {{ common_extras(taskname='{}_human_decision'.format(push_to_releases_basename), locales=["null"], platform="null") | indent(12)}}
-            {{ task_notifications("{{ product }} {{ branch }} push to releases human decision task", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+            {{ task_notifications("{} {} push to releases human decision task".format(product, branch), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}
 
 {% endif %}
 
@@ -85,10 +85,10 @@
                 DUMMY_ENV_FOR_ENCRYPT: "fake"
             encryptedEnv:
                 - {{ encrypt_env_var(stableSlugId(push_to_releases_basename), now_ms,
-                                   now_ms + 24 * 3600 * 1000, 'AWS_ACCESS_KEY_ID',
+                                   now_ms + 24 * 4 * 3600 * 1000, 'AWS_ACCESS_KEY_ID',
                                    beetmover_aws_access_key_id) }}
                 - {{ encrypt_env_var(stableSlugId(push_to_releases_basename), now_ms,
-                                   now_ms + 24 * 3600 * 1000, 'AWS_SECRET_ACCESS_KEY',
+                                   now_ms + 24 * 4 * 3600 * 1000, 'AWS_SECRET_ACCESS_KEY',
                                    beetmover_aws_secret_access_key) }}
         metadata:
             name: "[beetmover] {{ product }} {{ branch }} push to releases"
@@ -110,4 +110,4 @@
                     platform: linux64
                 build:
                     platform: all
-            {{ task_notifications("[beetmover] {{ product }} {{ branch }} push to releases", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+            {{ task_notifications("[beetmover] {} {} push to releases".format(product, branch), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}

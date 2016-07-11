@@ -52,6 +52,7 @@
                 # Don't clone mozharness, use the in-tree version
                 MOZHARNESS_DISABLE: "true"
                 MOZ_PKG_VERSION: "{{ version }}"
+                MOZHARNESS_ACTIONS: "no-checkout-sources"
         metadata:
             owner: release@mozilla.com
             source: https://github.com/mozilla/releasetasks
@@ -78,7 +79,8 @@
                     platform: linux64
                 build:
                     platform: all
-            {{ task_notifications("{{ branch }} source generation", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+            {{ task_notifications("{} source generation".format(branch), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}
+
 -
     taskId: "{{ stableSlugId(buildername_signing) }}"
     requires:
@@ -124,7 +126,7 @@
                     platform: linux64
                 build:
                     platform: all
-            {{ task_notifications("{{ branch }} source signing", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+            {{ task_notifications("{} source signing".format(branch), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}
 
 -
     taskId: "{{ stableSlugId(buildername_beet) }}"
@@ -161,10 +163,10 @@
                 DUMMY_ENV_FOR_ENCRYPT: "fake"
             encryptedEnv:
                 - {{ encrypt_env_var(stableSlugId(buildername_beet), now_ms,
-                                   now_ms + 24 * 3600 * 1000, 'AWS_ACCESS_KEY_ID',
+                                   now_ms + 24 * 4 * 3600 * 1000, 'AWS_ACCESS_KEY_ID',
                                    beetmover_aws_access_key_id) }}
                 - {{ encrypt_env_var(stableSlugId(buildername_beet), now_ms,
-                                   now_ms + 24 * 3600 * 1000, 'AWS_SECRET_ACCESS_KEY',
+                                   now_ms + 24 * 4 * 3600 * 1000, 'AWS_SECRET_ACCESS_KEY',
                                    beetmover_aws_secret_access_key) }}
         metadata:
             name: "[beetmover] {{ product }} {{ branch }} move source bundles"
@@ -185,7 +187,7 @@
                     platform: Linux64
                 build:
                     platform: all
-            {{ task_notifications("[beetmover] {{ product }} {{ branch }} move source bundles", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+            {{ task_notifications("[beetmover] {} {} move source bundles".format(product, branch), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}
 
 -
     taskId: "{{ stableSlugId(buildername_beet_signing) }}"
@@ -221,10 +223,10 @@
                 DUMMY_ENV_FOR_ENCRYPT: "fake"
             encryptedEnv:
                 - {{ encrypt_env_var(stableSlugId(buildername_beet_signing), now_ms,
-                                   now_ms + 24 * 3600 * 1000, 'AWS_ACCESS_KEY_ID',
+                                   now_ms + 24 * 4 * 3600 * 1000, 'AWS_ACCESS_KEY_ID',
                                    beetmover_aws_access_key_id) }}
                 - {{ encrypt_env_var(stableSlugId(buildername_beet_signing), now_ms,
-                                   now_ms + 24 * 3600 * 1000, 'AWS_SECRET_ACCESS_KEY',
+                                   now_ms + 24 * 4 * 3600 * 1000, 'AWS_SECRET_ACCESS_KEY',
                                    beetmover_aws_secret_access_key) }}
         metadata:
             name: "[beetmover] {{ product }} {{ branch }} move source bundle checksums"
@@ -245,4 +247,4 @@
                     platform: Linux64
                 build:
                     platform: all
-            {{ task_notifications("[beetmover] {{ product }} {{ branch }} move source bundle checksums", failed=None, exception=None, artifact=None, completed=None) | indent(12) }}
+            {{ task_notifications("[beetmover] {} {} move source bundle checksums".format(product, branch), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}
