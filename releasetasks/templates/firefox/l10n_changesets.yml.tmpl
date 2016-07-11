@@ -44,7 +44,7 @@
         extra:
             {{ common_extras(taskname=buildername, locales=["null"], platform="null") | indent(12)}}
             l10n_changesets: "{{ format_l10n_changesets(l10n_changesets) }}"
-            {{ task_notifications("{} L10N changesets".format(branch), completed=["releng"], failed=["releng"], exception=["releng"]) | indent(12) }}
+            {{ task_notifications("{} L10N changesets".format(branch), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}
 
 
 -
@@ -106,4 +106,4 @@
                     platform: Linux64
                 build:
                     platform: all
-            {{ task_notifications("[beetmover] {} {} move L10N changesets".format(product, branch), completed=["releng"], failed=["releng"], exception=["releng"]) | indent(12) }}
+            {{ task_notifications("[beetmover] {} {} move L10N changesets".format(product, branch), completed=["releasetasks"], failed=["releasetasks"], exception=["releasetasks"]) | indent(12) }}
