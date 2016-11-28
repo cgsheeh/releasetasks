@@ -18,4 +18,4 @@ Example test invocation using docker:
   python setup.py docker_test
 
 Or to run a single test:
-  python setup.py docker_test --test-string=test_updates.py::TestUpdates::test_requires
+  python setup.py docker_test --test-string=firefox/test_updates.py::TestUpdates::test_requires
